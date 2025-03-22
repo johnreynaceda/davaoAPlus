@@ -67,7 +67,7 @@ class MemberSidebar extends Component implements HasForms
             );
         }
        
-        $remaining = Payment::where('loan_id', $this->loan_id)->where('is_paid', true)->sum('monthly_payment');
+                        $remaining = Payment::where('loan_id', $this->loan_id)->where('is_paid', true)->sum('monthly_payment');
                         $months_paid = Payment::where('loan_id', $this->loan_id)->where('is_paid', true)->count();
                         $months_left = $record->term - $months_paid;
                         

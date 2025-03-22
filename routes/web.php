@@ -52,6 +52,7 @@ Route::prefix('member')->middleware(['auth', 'verified'])->group(function(){
     Route::get('/my-loan', function(){
         return view('member.my_loan');
     })->name('member.my_loan');
+  
 });
 
 Route::middleware('auth')->group(function () {

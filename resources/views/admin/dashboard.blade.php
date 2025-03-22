@@ -23,7 +23,7 @@
                     </p>
                 </div>
             </div>
-            <div
+            {{-- <div
                 class="bg-gray-100 hover:bg-blue-600/80 group hover:text-white cursor-pointer hover:scale-95 px-5 py-2 rounded-2xl text-gray-700">
                 <div class="flex space-x-2 items-center">
                     <div class="h-10 w-10 bg-gray-200 group-hover:text-gray-700 rounded-full grid place-content-center">
@@ -60,7 +60,7 @@
                 <div class="mt-2 px-2 text-center ">
                     <p class="text-2xl font-semibold">&#8369;{{ number_format(56312, 2) }}</p>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 

@@ -1,12 +1,8 @@
 <x-app-layout>
-    <div>
+    <div class="absolute 2xl:w-1/2 ">
         <h1 class="text-3xl text-gray-700">Create Loan</h1>
-        <div class="mt-5"> <livewire:member.add-loan />
+        <div class="mt-5 mb-5"> <livewire:member.add-loan />
         </div>
     </div>
-    <x-slot name="sidebar">
-        <div>
-            <livewire:member-sidebar />
-        </div>
-    </x-slot>
+
 </x-app-layout>

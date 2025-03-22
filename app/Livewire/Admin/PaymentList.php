@@ -57,7 +57,7 @@ class PaymentList extends Component implements HasForms, HasTable
                         ViewField::make('rating')
                             ->view('filament.forms.proof')
                     ]),
-                    Action::make('approve')->label('Approve Payment')->color('success')->icon('heroicon-m-hand-thumb-up')->action(
+                    Action::make('approve')->label('Approve Payment')->visible(fn($record)=> $record->is_paid  == false)->color('success')->icon('heroicon-m-hand-thumb-up')->action(
                         fn($record) => $record->update(['is_paid' => true]),
                     ),
                 ])

@@ -37,7 +37,6 @@
 
         <!-- Page Content -->
         <main class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
-            {{-- {{ $slot }} --}}
             <div class="grid 2xl:grid-cols-6 grid-cols-1 gap-10">
                 <div class="2xl:col-span-4 col-span-6">
 
