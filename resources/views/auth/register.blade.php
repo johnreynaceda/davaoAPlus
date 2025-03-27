@@ -18,6 +18,13 @@
                 required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
+        <div class="mt-4">
+            <x-input-label for="contact" :value="__('Phone Number')" />
+            <x-text-input id="contact"
+                class="block mt-1 w-full border h-11 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm px-2"
+                type="contact" name="contact" :value="old('contact')" required autocomplete="contact" />
+            <x-input-error :messages="$errors->get('contact')" class="mt-2" />
+        </div>
 
         <!-- Password -->
         <div class="mt-4">

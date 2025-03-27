@@ -6,7 +6,8 @@
             <div class="my-2  flex-col flex  space-y-2">
                 <div class="flex space-x-3 items-center">
                     <div class="h-20 w-20 rounded-full border-2 bg-transparent p-1  overflow-hidden">
-                        <img src="{{ asset('images/sample.png') }}" class="h-full bg-white rounded-full w-full" alt="">
+                        <img src="{{ asset('images/sample.png') }}" class="h-full bg-white rounded-full w-full"
+                            alt="">
                     </div>
                     <div>
                         <h1 class="text-lg  text-white ">{{ auth()->user()->name }}</h1>
@@ -39,7 +40,7 @@
                         <div class="mt-5 flex space-x-5 items-center relative">
                             <x-button label="PAY NOW" @click="slideOverOpen=true" spinner="payNow" squared positive
                                 class="font-semibold w-full" />
-                            <x-button label="DISMISS" flat squared white class="font-semibold w-full" />
+                            {{-- <x-button label="DISMISS" flat squared white class="font-semibold w-full" /> --}}
                         </div>
                     @endif
                 </div>
@@ -191,9 +192,9 @@
     </div>
     <div class="fixed 2xl:hidden bottom-5 right-5 h-16 w-16 rounded-full bg-main text-white border-white">
         <a href="{{ route('member.add-loan') }}" class=" grid place-content-center h-full w-full">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-file-plus-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" class="lucide lucide-file-plus-2">
                 <path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4" />
                 <path d="M14 2v4a2 2 0 0 0 2 2h4" />
                 <path d="M3 15h6" />
