@@ -93,7 +93,7 @@ class LoanApplication extends Component implements HasForms, HasTable
                             $total_payment = $monthly_payment + $monthly_interest;
 
                             // Create a new payment record with calculated amounts
-                            Payment::create([
+                            $payment = Payment::create([
                                 'loan_id' => $record->id,
                                 'monthly_payment' => $monthly_payment,
                                 'interest' => $monthly_interest,
@@ -107,7 +107,7 @@ class LoanApplication extends Component implements HasForms, HasTable
                             }
 
                             // $record->user->notify(new LoanApplicationNotification($record->user));
-                            // SendReminder::dispatch($record->user, now())->delay(now()->addMinutes(1));
+                            SendReminder::dispatch($record->user, $payment->due_date)->delay(now()->addMinutes(1));
                         }
                     ),
                     Action::make('reject')->visible(fn($record) => $record->status == 'pending')->icon('heroicon-m-hand-thumb-down')->color('danger')->action(
@@ -153,7 +153,7 @@ class LoanApplication extends Component implements HasForms, HasTable
     {
         sleep(2);
 
-        SendReminder::dispatch(auth()->user(), now())->delay(now()->addMinutes(1));
+        // SendReminder::dispatch(auth()->user(), now())->delay(now()->addMinutes(1));
     }
 
     public function render()
