@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('password');
             $table->string('user_type')->default('member');
             $table->string('contact')->unique()->nullable();
-            $table->boolean('is_approve')->default(false);
+            $table->boolean('is_approve')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });

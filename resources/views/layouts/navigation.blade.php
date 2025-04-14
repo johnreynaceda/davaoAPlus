@@ -31,9 +31,31 @@
                         <x-nav-link :href="route('admin.payments')" :active="request()->routeIs('admin.payments')">
                             {{ __('Payments') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')">
+                            {{ __('Managers') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('admin.reports')" :active="request()->routeIs('admin.reports')">
                             {{ __('Reports') }}
                         </x-nav-link>
+                    @elseif (auth()->user()->user_type == 'manager')
+                        <x-nav-link :href="route('manager.dashboard')" :active="request()->routeIs('manager.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('manager.member')" :active="request()->routeIs('manager.member')">
+                            {{ __('Members') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('manager.loans')" :active="request()->routeIs('manager.loans')">
+                            {{ __('Loans') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('manager.payments')" :active="request()->routeIs('manager.payments')">
+                            {{ __('Payments') }}
+                        </x-nav-link>
+                        {{-- <x-nav-link :href="route('manager.users')" :active="request()->routeIs('manager.users')">
+                            {{ __('Managers') }}
+                        </x-nav-link> --}}
+                        {{-- <x-nav-link :href="route('manager.reports')" :active="request()->routeIs('manager.reports')">
+                            {{ __('Reports') }}
+                        </x-nav-link> --}}
                     @else
                         <x-nav-link :href="route('member.dashboard')" :active="request()->routeIs('member.dashboard')">
                             {{ __('Dashboard') }}
@@ -47,8 +69,8 @@
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                @if (auth()->user()->user_type != 'admin')
-                    <x-button label="ADD LOAN" rounded icon="plus" href="{{ route('member.add-loan') }}" info
+                @if (auth()->user()->user_type == 'member')
+                    <x-button label="APPLY FOR LOAN" rounded icon="plus" href="{{ route('member.add-loan') }}" info
                         class="font-semibold mr-2" />
                 @endif
 

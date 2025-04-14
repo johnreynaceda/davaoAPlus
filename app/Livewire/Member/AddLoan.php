@@ -31,7 +31,7 @@ class AddLoan extends Component implements HasForms
     public $spouse_lastname, $spouse_firstname, $spouse_middlename, $spouse_birthdate;
     public $purok, $brgy, $city, $province;
     public $home, $civil_status;
-    public $loan_amount, $term;
+    public $loan_amount, $term, $monthly;
 
     public $gross_income, $spouse_income, $total_expense, $total_uncommitted_income;
 
@@ -87,7 +87,7 @@ class AddLoan extends Component implements HasForms
                         Select::make('civil_status')->options([
                             'Single' => 'Single',
                             'Married' => 'Married',
-                            'Widow' => 'Widowed',
+                            'Widow' => 'Widow',
                         ])
                     ])->columns(2),
                 Section::make('II. SOURCES OF INCOME')
@@ -111,10 +111,27 @@ class AddLoan extends Component implements HasForms
 
                         Fieldset::make('AMOUNT REQUESTED')->schema([
                             Grid::make(2)->schema([
-                                TextInput::make('loan_amount')->required()->numeric()->prefix('PHP'),
-                                TextInput::make('term')->required()->numeric()->prefix('No. of Months'),
+                                TextInput::make('loan_amount')
+                                    ->label('Loan Amount')
+                                    ->numeric()
+                                    ->prefix('PHP')
+                                    ->reactive()
+                                    ->afterStateUpdated(fn() => $this->updateMonthly()),
 
-                            ])
+                                TextInput::make('term')
+                                    ->label('Term')
+                                    ->numeric()
+                                    ->prefix('No. of Months')
+                                    ->reactive()
+                                    ->afterStateUpdated(fn() => $this->updateMonthly()),
+
+                                TextInput::make('monthly')
+                                    ->label('Monthly Payment')
+                                    ->numeric()
+                                    ->prefix('PHP')
+                                    ->hint('w/ 5% interest')
+                                    ->disabled(),
+                            ]),
                         ])->columns(1),
                     ]),
                 Section::make('III. STATEMENT OF MONTHLY INCOME')
@@ -179,6 +196,35 @@ class AddLoan extends Component implements HasForms
                     ])->columns(1),
 
             ]);
+    }
+
+    public function updateMonthly()
+    {
+        if ($this->loan_amount > 0 && $this->term > 0) {
+            $remaining_balance = floatval($this->loan_amount);
+            $months_left = intval($this->term);
+            $monthly_rate = 0.05;
+
+            // Amortized monthly payment formula
+            $numerator = $monthly_rate * pow(1 + $monthly_rate, $months_left);
+            $denominator = pow(1 + $monthly_rate, $months_left) - 1;
+
+            if ($denominator != 0) {
+                $monthly_payment = $remaining_balance * ($numerator / $denominator);
+            } else {
+                $monthly_payment = 0; // Prevent division by zero
+            }
+
+            // Monthly interest (first month)
+            $monthly_interest = $remaining_balance * $monthly_rate;
+
+            // Set component properties
+            $this->monthly = round($monthly_payment + $monthly_interest, 2);
+            $this->monthly_interest = round($monthly_interest, 2);
+        } else {
+            $this->monthly = null;
+            $this->monthly_interest = null;
+        }
     }
 
     public function submitForm()

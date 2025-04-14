@@ -102,7 +102,7 @@ class LoanApplication extends Component implements HasForms, HasTable
 
                             if (!empty($record->user->contact)) {
                                 $number = $record->user->contact;
-                                $message = "DAVAO A+ \n\nYour Loan has been approved. Thank you.";
+                                $message = "DAVAO A+ \n\nYour Loan has been approved. Please submit the requirements on " . now()->addDays(2)->format('F d, Y') . ".  Thank you.";
                                 $this->sendSms($number, $message);
                             }
 
@@ -111,7 +111,17 @@ class LoanApplication extends Component implements HasForms, HasTable
                         }
                     ),
                     Action::make('reject')->visible(fn($record) => $record->status == 'pending')->icon('heroicon-m-hand-thumb-down')->color('danger')->action(
-                        fn($record) => $record->update(['status' => 'rejected'])
+                        function ($record) {
+                            $record->update(['status' => 'rejected']);
+
+                            if (!empty($record->user->contact)) {
+                                $number = $record->user->contact;
+                                $message = "DAVAO A+ \n\nYour Loan has been rejected. Please contact us for more information. Thank you.";
+                                $this->sendSms($number, $message);
+                            }
+
+                            // $record->user->notify(new LoanApplicationNotification($record->user));
+                        }
                     ),
                     Action::make('completed')->visible(fn($record) => $record->status == 'approved')->icon('heroicon-m-check-circle')->color('success')->action(
                         fn($record) => $record->update(['status' => 'completed'])

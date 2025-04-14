@@ -16,43 +16,69 @@ Route::get('/dashboard', function () {
         case 'admin':
             return redirect()->route('admin.dashboard');
         case 'member':
-           return redirect()->route('member.dashboard');
+            return redirect()->route('member.dashboard');
+        case 'manager':
+            return redirect()->route('manager.dashboard');
         default:
             # code...
             break;
-       }
-})->middleware(['auth', 'verified',IsApprove::class])->name('dashboard');
+    }
+})->middleware(['auth', 'verified', IsApprove::class])->name('dashboard');
 
-Route::prefix('administrator')->middleware(['auth', 'verified'])->group(function(){
-    Route::get('/', function(){
+Route::prefix('administrator')->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
-    Route::get('/member', function(){
+    Route::get('/member', function () {
         return view('admin.member');
     })->name('admin.member');
-    Route::get('/loans', function(){
+    Route::get('/loans', function () {
         return view('admin.loans');
     })->name('admin.loans');
-    Route::get('/reports', function(){
+    Route::get('/reports', function () {
         return view('admin.reports');
     })->name('admin.reports');
-    Route::get('/payments', function(){
+    Route::get('/users', function () {
+        return view('admin.users');
+    })->name('admin.users');
+    Route::get('/payments', function () {
         return view('admin.payments');
     })->name('admin.payments');
 });
 
+Route::prefix('manager')->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', function () {
+        return view('manager.dashboard');
+    })->name('manager.dashboard');
+    Route::get('/member', function () {
+        return view('admin.member');
+    })->name('manager.member');
+    Route::get('/loans', function () {
+        return view('admin.loans');
+    })->name('manager.loans');
+    Route::get('/reports', function () {
+        return view('admin.reports');
+    })->name('manager.reports');
+    Route::get('/users', function () {
+        return view('admin.users');
+    })->name('manager.users');
+    Route::get('/payments', function () {
+        return view('admin.payments');
+    })->name('manager.payments');
+});
 
-Route::prefix('member')->middleware(['auth', 'verified'])->group(function(){
-    Route::get('/', function(){
+
+Route::prefix('member')->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', function () {
         return view('member.dashboard');
     })->name('member.dashboard');
-    Route::get('/add-loan', function(){
+    Route::get('/add-loan', function () {
         return view('member.add-loan');
     })->name('member.add-loan');
-    Route::get('/my-loan', function(){
+    Route::get('/my-loan', function () {
         return view('member.my_loan');
     })->name('member.my_loan');
-  
+
 });
 
 Route::middleware('auth')->group(function () {
@@ -61,4 +87,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

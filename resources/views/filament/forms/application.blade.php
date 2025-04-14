@@ -282,7 +282,8 @@
                 </div>
                 <div x-show="tab==='tab6'" class="text-base-500" style="display: none">
                     <main class="py-4">
-                        <img src="" class="w-full h-auto" alt="">
+                        <img src="{{ Storage::url($getRecord()->loanInfo->house_sketch_path) }}"
+                            class="w-full h-auto" alt="">
                     </main>
                 </div>
             </div>
