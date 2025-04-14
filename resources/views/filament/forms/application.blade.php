@@ -215,7 +215,14 @@
                             <div>
                                 <h1 class="text-sm"></h1>
                                 <h1 class="font-semibold uppercase">
-                                    {{ implode(',', json_decode($getRecord()->loanInfo->agriculture)) }}
+                                    @php
+                                        $names = array_map(
+                                            fn($item) => $item['name'],
+                                            json_decode($getRecord()->loanInfo->agriculture, true),
+                                        );
+
+                                    @endphp
+                                    {{ implode(', ', $names) }}
                                 </h1>
                             </div>
 
@@ -225,7 +232,14 @@
                             <div>
                                 <h1 class="text-sm"></h1>
                                 <h1 class="font-semibold uppercase">
-                                    {{ implode(',', json_decode($getRecord()->loanInfo->agriculture)) }}
+                                    @php
+                                        $names = array_map(
+                                            fn($item) => $item['name'],
+                                            json_decode($getRecord()->loanInfo->microfinance, true),
+                                        );
+
+                                    @endphp
+                                    {{ implode(', ', $names) }}
                                 </h1>
                             </div>
 

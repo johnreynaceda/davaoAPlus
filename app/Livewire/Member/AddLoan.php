@@ -35,7 +35,7 @@ class AddLoan extends Component implements HasForms
 
     public $gross_income, $spouse_income, $total_expense, $total_uncommitted_income;
 
-    public $agriculture = [], $microfinance = [];
+    public $agriculture = [[]], $microfinance = [[]];
 
     public $house_sketch = [];
     public $business = [[]];
@@ -67,12 +67,12 @@ class AddLoan extends Component implements HasForms
                             TextInput::make('contact_number')->numeric(),
                             DatePicker::make('birthdate')->required(),
                         ])->columns(4),
-                        Fieldset::make('SPOUSE')->schema([
-                            TextInput::make('spouse_lastname')->label('Lastname')->required(),
-                            TextInput::make('spouse_fistname')->label('Firstname')->required(),
-                            TextInput::make('spouse_middlename')->label('Middlename'),
-                            DatePicker::make('spouse_birthdate')->label('Birthdate')->required(),
-                        ])->columns(4),
+                        // Fieldset::make('SPOUSE')->schema([
+                        //     TextInput::make('spouse_lastname')->label('Lastname')->required(),
+                        //     TextInput::make('spouse_fistname')->label('Firstname')->required(),
+                        //     TextInput::make('spouse_middlename')->label('Middlename'),
+                        //     DatePicker::make('spouse_birthdate')->label('Birthdate')->required(),
+                        // ])->columns(4),
                         Fieldset::make('RESIDENTIAL ADDRESS')->schema([
                             TextInput::make('purok'),
                             TextInput::make('brgy'),
@@ -148,30 +148,31 @@ class AddLoan extends Component implements HasForms
                 Section::make('IV. LOAN PURPOSE')
                     ->schema([
                         Fieldset::make('AGRICULTURE')->schema([
-                            CheckboxList::make('agriculture')->label('')
-                                ->options([
-                                    'Rice' => 'Rice',
-                                    'Corn' => 'Corn',
-                                    'Sugar Cane' => 'Sugar Cane',
-                                    'Mango' => 'Mango',
-                                    'Banana' => 'Banana',
-                                    'Poultry' => 'Poultry',
-                                    'Swine' => 'Swine',
+                            Repeater::make('agriculture')->label('')
+                                ->schema([
+                                    TextInput::make('name')->required(),
                                 ])
-                                ->columns(3)
-                        ])->columnSpan(4),
+                                ->columns(1)->addActionLabel('Add Agriculture')
+                        ])->columns(1),
                         Fieldset::make('MICROFINANCE')->schema([
-                            CheckboxList::make('microfinance')->label('')
-                                ->options([
-                                    'Sari-sari Store' => 'Sari-sari Store',
-                                    'Carenderia' => 'Carenderia',
-                                    'Tailoring/ Dressmaking' => 'Tailoring/ Dressmaking',
-                                    'Food Processing' => 'Food Processing',
-                                    'Tricycle' => 'Tricycle',
-
+                            Repeater::make('microfinance')->label('')
+                                ->schema([
+                                    TextInput::make('name')->required(),
                                 ])
-                                ->columns(3)
-                        ])->columnSpan(4),
+                                ->columns(1)->addActionLabel('Add Microfinance')
+                        ])->columns(1),
+                        // Fieldset::make('MICROFINANCE')->schema([
+                        //     CheckboxList::make('microfinance')->label('')
+                        //         ->options([
+                        //             'Sari-sari Store' => 'Sari-sari Store',
+                        //             'Carenderia' => 'Carenderia',
+                        //             'Tailoring/ Dressmaking' => 'Tailoring/ Dressmaking',
+                        //             'Food Processing' => 'Food Processing',
+                        //             'Tricycle' => 'Tricycle',
+
+                        //         ])
+                        //         ->columns(3)
+                        // ])->columnSpan(4),
                     ])->columns(2),
                 Section::make('V. CREDIT INFORMATION')
                     ->schema([
